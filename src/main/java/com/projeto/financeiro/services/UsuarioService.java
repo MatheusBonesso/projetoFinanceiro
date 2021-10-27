@@ -1,5 +1,7 @@
 package com.projeto.financeiro.services;
 
+import java.util.Optional;
+
 import com.projeto.financeiro.model.entity.Usuario;
 
 public interface UsuarioService {
@@ -9,4 +11,6 @@ public interface UsuarioService {
 	Usuario salvarUsuario(Usuario usuario);
 	
 	void validarEmail(String email);
+	
+	Optional<Usuario> obterId(Long id);
 }

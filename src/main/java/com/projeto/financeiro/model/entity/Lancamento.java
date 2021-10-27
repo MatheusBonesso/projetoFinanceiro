@@ -1,13 +1,21 @@
 package com.projeto.financeiro.model.entity;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import com.projeto.financeiro.model.enums.StatusLancamento;
 import com.projeto.financeiro.model.enums.TipoLancamento;
@@ -30,10 +38,10 @@ public class Lancamento {
 
 	@Column(name = "descricao")
 	private String descricao;
-	
+
 	@Column(name = "mes")
 	private Integer mes;
-	
+
 	@Column(name = "ano")
 	private Integer ano;
 
@@ -41,11 +49,17 @@ public class Lancamento {
 	private BigDecimal valor;
 
 	@Column(name = "tipo")
+	@Enumerated(value = EnumType.STRING)
 	private TipoLancamento tipoLancamento;
 
 	@Column(name = "status")
 	private StatusLancamento status;
-	
-	@Column(name = "id_usuario")
+
+	@JoinColumn(name = "id_usuario")
+	@ManyToOne
 	private Usuario usuario;
+
+	@Column(name = "data_cadastro")
+	@Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+	private LocalDate dataCadastro;
 }
